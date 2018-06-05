@@ -39,7 +39,7 @@
 
 
 #include <stdio.h>
-
+#include <math.h>
 #include<time.h>
 
 using namespace std;
@@ -97,9 +97,15 @@ class PrimeList{
 				return true;
 			}
 			
+			if(n & 1 == 0){
+				return false;
+			}
+			
 			PrimeListNode<T>* p = &primeList;
+			
 			T i = p->getValue();
-			while(i*i <= n){
+			T roof = (T)sqrt((double)n);
+			while(i <= roof){
 				
 				if(n%i == 0){
 					return false;
@@ -127,26 +133,33 @@ int main(){
 	
 	PrimeList<int> list;
 	
-	int n, tmp, count;
+	int n, *arr, count;
 	clock_t ts, te;
 	
 	while(scanf("%d", &n) != EOF){
 		
-		ts = clock();
+		arr = new int[n];
 		
 		count = 0;
 		
 		for(int i = 0; i < n; ++i){
-			scanf("%d", &tmp);
-			if(list.isPrime(tmp)){
+			scanf("%d", arr+i);
+		}
+		
+		ts = clock();
+		
+		for(int i = 0; i < n; ++i){
+			if(list.isPrime(arr[i])){
 				++count;
 			}
 		}
 		
 		te = clock();
 		
-		printf("%d in %ld ms \n", count, te - ts);
+//		printf("%d in %ld ms \n", count, te - ts);
+		printf("%d\n", count);
 		
+		delete[] arr;
 	}
 	return 0;
 	
